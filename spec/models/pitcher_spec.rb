@@ -122,4 +122,51 @@ describe Pitcher do
     expect(Pitcher.most_winners_in_term(2000, 2002)).to eq []
   end
 
+  it "best_dealメソッド使用時、最も費用対効果が高かった投手が一人の場合" do
+    Pitcher.create(player_id: 'taro', year_id: 2000, win: 20)
+    Pitcher.create(player_id: 'jiro', year_id: 2000, win: 15)
+    Pitcher.create(player_id: 'saburo', year_id: 2000, win: 10)
+    Pitcher.create(player_id: 'taro', year_id: 2001, win: 10)
+    Pitcher.create(player_id: 'jiro', year_id: 2001, win: 15)
+    Pitcher.create(player_id: 'saburo', year_id: 2001, win: 20)
+    Salary.create(player_id: 'taro', year_id: 2000, salary: 2000000)
+    Salary.create(player_id: 'jiro', year_id: 2000, salary: 2500000)
+    Salary.create(player_id: 'saburo', year_id: 2000, salary: 3000000)
+    Salary.create(player_id: 'taro', year_id: 2001, salary: 3000000)
+    Salary.create(player_id: 'jiro', year_id: 2001, salary: 2500000)
+    Salary.create(player_id: 'saburo', year_id: 2001, salary: 2000000)
+    expect(Pitcher.best_deal(2000)).to eq ["taro"]
+  end
+
+  it "best_dealメソッド使用時、最も費用対効果が高かった投手が複数人の場合" do
+    Pitcher.create(player_id: 'taro', year_id: 2000, wins: 20)
+    Pitcher.create(player_id: 'jiro', year_id: 2000, wins: 15)
+    Pitcher.create(player_id: 'saburo', year_id: 2000, wins: 10)
+    Pitcher.create(player_id: 'taro', year_id: 2001, wins: 10)
+    Pitcher.create(player_id: 'jiro', year_id: 2001, wins: 15)
+    Pitcher.create(player_id: 'saburo', year_id: 2001, wins: 20)
+    Salary.create(player_id: 'taro', year_id: 2000, salary: 2000000)
+    Salary.create(player_id: 'jiro', year_id: 2000, salary: 1500000)
+    Salary.create(player_id: 'saburo', year_id: 2000, salary: 3000000)
+    Salary.create(player_id: 'taro', year_id: 2001, salary: 3000000)
+    Salary.create(player_id: 'jiro', year_id: 2001, salary: 2500000)
+    Salary.create(player_id: 'saburo', year_id: 2001, salary: 2000000)
+    expect(Picher.best_deal(2000)).to eq ["taro", "jiro"]
+  end
+
+  it "best_dealメソッド使用時、指定した年のある投手の給与データが存在しない場合" do
+    Pitcher.create(player_id: 'taro', year_id: 2000, wins: 20)
+    Pitcher.create(player_id: 'jiro', year_id: 2000, wins: 15)
+    Pitcher.create(player_id: 'saburo', year_id: 2000, wins: 10)
+    Pitcher.create(player_id: 'taro', year_id: 2001, wins: 10)
+    Pitcher.create(player_id: 'jiro', year_id: 2001, wins: 15)
+    Pitcher.create(player_id: 'saburo', year_id: 2001, wins: 20)
+    Salary.create(player_id: 'jiro', year_id: 2000, salary: 250000)
+    Salary.create(player_id: 'saburo', year_id: 2000, salary: 300000)
+    Salary.create(player_id: 'taro', year_id: 2001, salary: 300000)
+    Salary.create(player_id: 'jiro', year_id: 2001, salary: 250000)
+    Salary.create(player_id: 'saburo', year_id: 2001, salary: 200000)
+    expect(Pitcher.best_deal(2000)).to eq ["jiro"]
+  end
+
 end
