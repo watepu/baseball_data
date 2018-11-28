@@ -17,11 +17,14 @@ class Pitcher < ApplicationRecord
     best_pitchers.pluck(:player_id)
   end
 
-def self.most_winners_in_team(year, team)
-  pitchers = Pitcher.where(year_id: year, team_id: team)
-  max_win = pitchers.maximum(:wins)
-  best_pitchers = pitchers.where(wins: max_win)
-  best_pitchers.pluck(:player_id)
-end
+  def self.most_winners_in_team(year, team)
+    pitchers = Pitcher.where(year_id: year, team_id: team)
+    max_win = pitchers.maximum(:wins)
+    best_pitchers = pitchers.where(wins: max_win)
+    best_pitchers.pluck(:player_id)
+  end
+
+  def self.most_winners_in_team(start_year, end_year)
+  end
 
 end
