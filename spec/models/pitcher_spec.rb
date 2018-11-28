@@ -35,7 +35,7 @@ describe Pitcher do
     Pitcher.create(player_id: 'zyuro', year_id: 2000, wins: 16)
     Pitcher.create(player_id: 'zyuichiro', year_id: 2000, wins: 10)
     Pitcher.create(player_id: 'zyuuniro', year_id: 2001, wins: 18)
-    expect(Pitcher.top_ten(2000).to eq ["rokuro","nanaro","hatiro","kurou","zyuro","taro","jiro","saburo","siro","goro"])
+    expect(Pitcher.top_ten(2000)).to eq ["rokuro","nanaro","hatiro","kurou","zyuro","taro","jiro","saburo","siro","goro"]
   end
 
   it "top_tenメソッド使用時、上から10番目の投手と同じ勝利数の投手がいる場合" do
@@ -52,7 +52,7 @@ describe Pitcher do
     Pitcher.create(player_id: 'zyuuitiro', year_id: 2000, wins: 11)
     Pitcher.create(player_id: 'zyuuniro', year_id: 2000, wins: 10)
     Pitcher.create(player_id: 'zyuuniro', year_id: 2001, wins: 18)
-    expect(Pitcher.top_ten(2000).to eq ["rokuro","nanaro","hatiro","juro","kuro","taro","ziro","saburo","siro","goro","zyuuitiro"])
+    expect(Pitcher.top_ten(2000)).to eq ["rokuro","nanaro","hatiro","juro","kuro","taro","ziro","saburo","siro","goro","zyuuitiro"]
   end
 
   it "top_tenメソッド使用時、指定した年のデータが10件に満たない場合" do
@@ -63,12 +63,12 @@ describe Pitcher do
     Pitcher.create(player_id: 'goro', year_id: 2000, wins: 11)
     Pitcher.create(player_id: 'rokuro', year_id: 2000, wins: 20)
     Pitcher.create(player_id: 'nanaro', year_id: 2001, wins: 19)
-    expect(Pitcher.top_ten(2000).to eq ["rokuro", "taro", "ziro", "saburo", "siro", "goro"])
+    expect(Pitcher.top_ten(2000)).to eq ["rokuro", "taro", "ziro", "saburo", "siro", "goro"]
   end
 
   it "top_tenメソッド使用時、指定した年のデータが存在しない場合" do
     Pitcher.create(player_id: 'taro', year_id: 2001, wins: 15)
-    expect(Pitcher.top_ten(2000).to eq [])
+    expect(Pitcher.top_ten(2000)).to eq []
   end
 
 end
