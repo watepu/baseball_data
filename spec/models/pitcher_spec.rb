@@ -71,4 +71,29 @@ describe Pitcher do
     expect(Pitcher.top_ten(2000)).to eq []
   end
 
+  it "most_winners_in_teamメソッド使用時、最多勝投手が一人の場合" do
+    Pitcher.create(player_id: 'taro', year_id: 2000, team_id: "A", wins: 18)
+    Pitcher.create(player_id: 'jiro', year_id: 2000, team_id: "A", wins: 17)
+    Pitcher.create(player_id: 'saburo', year_id: 2000, team_id: "A", wins: 16)
+    Pitcher.create(player_id: 'siro', year_id: 2000, team_id: "B", wins: 18)
+    Pitcher.create(player_id: 'goro', year_id: 2000, team_id: "B", wins: 17)
+    Pitcher.create(player_id: 'rokuro', year_id: 2001, team_id: "A", wins: 18)
+    expect(Pitcher.most_winners_in_team(2000, "A")).to eq ["taro"]
+  end
+
+  it "most_winners_in_teamメソッド使用時、最多勝投手が複数人の場合" do
+    Pitcher.create(player_id: 'taro', year_id: 2000, team_id: "A", wins: 18)
+    Pitcher.create(player_id: 'jiro', year_id: 2000, team_id: "A", wins: 18)
+    Pitcher.create(player_id: 'saburo', year_id: 2000, team_id: "A", wins: 16)
+    Pitcher.create(player_id: 'siro', year_id: 2000, team_id: "B", wins: 18)
+    Pitcher.create(player_id: 'goro', year_id: 2000, team_id: "B", wins: 17)
+    Pitcher.create(player_id: 'rokuro', year_id: 2001, team_id: "A", wins: 18)
+    expect(Pitcher.most_winners_in_team(2000, "A")).to eq ["taro", "jiro"]
+  end
+
+  it "most_winners_in_teamメソッド使用時、指定した年、チームのデータが存在しない場合" do
+    Pitcher.create(player_id: 'taro', year_id: 2001, team_id: "B", wins: 18)
+    expect(Pitcher.most_winners_in_team(2000, "A")).to eq []
+  end
+
 end
