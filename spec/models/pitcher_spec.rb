@@ -169,4 +169,14 @@ describe Pitcher do
     expect(Pitcher.best_deal(2000)).to eq ["jiro"]
   end
 
+  it "best_dealメソッド使用時、指定した年のデータが存在しない場合" do
+    Pitcher.create(player_id: 'taro', year_id: 2001, wins: 10)
+    Pitcher.create(player_id: 'jiro', year_id: 2001, wins: 15)
+    Pitcher.create(player_id: 'saburo', year_id: 2001, wins: 20)
+    Salary.create(playerID: 'taro', year_id: 2001, salary: 3000000)
+    Salary.create(playerID: 'jiro', year_id: 2001, salary: 2500000)
+    Salary.create(playerID: 'saburo', year_id: 2001, salary: 2000000)
+    expect(Pitcher.best_deal(2000)).to eq []
+  end
+
 end
