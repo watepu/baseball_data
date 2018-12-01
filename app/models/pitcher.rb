@@ -31,4 +31,23 @@ class Pitcher < ApplicationRecord
     get_max_win_pitchers_id(pitchers)
   end
 
+  def self.best_deal(year)
+    pitchers = Pitcher.where(year_id: year)
+    cost_performance = 0
+    best_pitchers = []
+    pitchers.each do |pitcher|
+      if Salary.exists?(year_id: year, player_id: pitcher.player_id)
+        win = Pitchers.wins
+        salary = Salary.find_by(year_id: year, player_id: pitcher.player_id).salary
+        if cost_performance < win/salary.to_f
+          cost_performance = win/salary.to_f
+          best_pitchers = [pitcher]
+        elsif cost_performance == win/salary.to_f
+          best_pitchers.push(pitcher)
+        end
+      end
+    end
+    best_pitchers.pluck(:player_id)
+  end
+
 end
